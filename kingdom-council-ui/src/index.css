@@ -1,0 +1,180 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Himalayan Kingdom Theme - Warm Parchment & Earth Tones */
+    --background: 40 25% 97%; /* Parchment #F9F8F5 */
+    --foreground: 0 0% 7%; /* Near-black #111111 */
+
+    --card: 40 15% 95%; /* Warm white card */
+    --card-foreground: 0 0% 7%;
+
+    --popover: 40 25% 97%;
+    --popover-foreground: 0 0% 7%;
+
+    --primary: 30 35% 22%; /* Deep brown #4B3621 */
+    --primary-foreground: 40 25% 97%;
+
+    --secondary: 40 8% 91%; /* Stone-gray #EAE8E5 */
+    --secondary-foreground: 0 0% 7%;
+
+    --muted: 40 8% 91%;
+    --muted-foreground: 30 10% 45%;
+
+    --accent: 180 25% 38%; /* Muted teal #4B7B7B */
+    --accent-foreground: 40 25% 97%;
+
+    --gold: 40 35% 52%; /* Royal gold #B08D57 */
+    --gold-foreground: 0 0% 7%;
+
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 40 25% 97%;
+
+    --border: 40 15% 85%;
+    --input: 40 15% 88%;
+    --ring: 30 35% 22%;
+
+    --radius: 0.75rem;
+
+    /* Kingdom-specific colors */
+    --mountain-base: 210 20% 25%;
+    --mountain-peak: 210 15% 85%;
+    --decree-bg: 42 45% 92%; /* Parchment for Royal Decree */
+    --decree-border: 40 35% 52%; /* Gold border */
+
+    /* Sidebar colors */
+    --sidebar-background: 40 18% 93%;
+    --sidebar-foreground: 0 0% 7%;
+    --sidebar-primary: 30 35% 22%;
+    --sidebar-primary-foreground: 40 25% 97%;
+    --sidebar-accent: 40 15% 88%;
+    --sidebar-accent-foreground: 0 0% 7%;
+    --sidebar-border: 40 15% 82%;
+    --sidebar-ring: 30 35% 22%;
+
+    /* Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(40 25% 97%), hsl(40 15% 92%));
+    --gradient-mountain: linear-gradient(180deg, hsl(210 25% 30%), hsl(210 20% 15%));
+    --shadow-elegant: 0 10px 30px -10px hsl(30 35% 22% / 0.2);
+    --shadow-glow: 0 0 40px hsl(40 35% 52% / 0.15);
+  }
+
+  .dark {
+    /* Dark mode - Dim Kingdom at Night */
+    --background: 30 15% 12%; /* Dark warm brown */
+    --foreground: 40 25% 95%;
+
+    --card: 30 18% 15%;
+    --card-foreground: 40 25% 95%;
+
+    --popover: 30 18% 15%;
+    --popover-foreground: 40 25% 95%;
+
+    --primary: 40 35% 52%; /* Gold becomes primary in dark */
+    --primary-foreground: 30 15% 12%;
+
+    --secondary: 30 12% 20%;
+    --secondary-foreground: 40 25% 95%;
+
+    --muted: 30 12% 20%;
+    --muted-foreground: 40 15% 65%;
+
+    --accent: 180 25% 38%;
+    --accent-foreground: 40 25% 95%;
+
+    --gold: 40 35% 52%;
+    --gold-foreground: 30 15% 12%;
+
+    --destructive: 0 62.8% 40%;
+    --destructive-foreground: 40 25% 95%;
+
+    --border: 30 15% 25%;
+    --input: 30 15% 22%;
+    --ring: 40 35% 52%;
+
+    --mountain-base: 210 20% 15%;
+    --mountain-peak: 210 15% 45%;
+    --decree-bg: 30 18% 18%;
+    --decree-border: 40 35% 45%;
+
+    --sidebar-background: 30 18% 14%;
+    --sidebar-foreground: 40 25% 95%;
+    --sidebar-primary: 40 35% 52%;
+    --sidebar-primary-foreground: 30 15% 12%;
+    --sidebar-accent: 30 12% 22%;
+    --sidebar-accent-foreground: 40 25% 95%;
+    --sidebar-border: 30 15% 25%;
+    --sidebar-ring: 40 35% 52%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  /* Typography - Elegant Serif Headings */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Respect reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  /* Message animations */
+  .message-enter {
+    animation: message-slide-up 0.3s ease-out;
+  }
+
+  @keyframes message-slide-up {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Royal Decree card styling */
+  .royal-decree {
+    background: linear-gradient(135deg, hsl(var(--decree-bg)), hsl(var(--background)));
+    border: 2px solid hsl(var(--decree-border));
+    box-shadow: var(--shadow-glow);
+  }
+
+  /* Hover animations */
+  .hover-lift {
+    @apply transition-all duration-200;
+  }
+
+  .hover-lift:hover {
+    @apply -translate-y-1 shadow-lg;
+  }
+}
