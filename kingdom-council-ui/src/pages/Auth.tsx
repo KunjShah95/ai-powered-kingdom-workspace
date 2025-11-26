@@ -14,7 +14,6 @@ const Auth = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    // TODO: Implement authentication
     setTimeout(() => setIsLoading(false), 1000);
   };
 
@@ -29,7 +28,7 @@ const Auth = () => {
           opacity: 0.1,
         }}
       />
-      <Card className="relative z-10 w-full max-w-md p-8">{/* backdrop-blur-sm */}
+      <Card className="relative z-10 w-full max-w-md p-8">
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gold/10 mb-4">
             <Crown className="h-8 w-8 text-gold" />

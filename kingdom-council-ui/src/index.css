@@ -2,35 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
-
 @layer base {
   :root {
-    /* Himalayan Kingdom Theme - Warm Parchment & Earth Tones */
-    --background: 40 25% 97%; /* Parchment #F9F8F5 */
-    --foreground: 0 0% 7%; /* Near-black #111111 */
+    --background: 40 25% 97%;
+    --foreground: 0 0% 7%;
 
-    --card: 40 15% 95%; /* Warm white card */
+    --card: 40 15% 95%;
     --card-foreground: 0 0% 7%;
 
     --popover: 40 25% 97%;
     --popover-foreground: 0 0% 7%;
 
-    --primary: 30 35% 22%; /* Deep brown #4B3621 */
+    --primary: 30 35% 22%;
     --primary-foreground: 40 25% 97%;
 
-    --secondary: 40 8% 91%; /* Stone-gray #EAE8E5 */
+    --secondary: 40 8% 91%;
     --secondary-foreground: 0 0% 7%;
 
     --muted: 40 8% 91%;
     --muted-foreground: 30 10% 45%;
 
-    --accent: 180 25% 38%; /* Muted teal #4B7B7B */
+    --accent: 180 25% 38%;
     --accent-foreground: 40 25% 97%;
 
-    --gold: 40 35% 52%; /* Royal gold #B08D57 */
+    --gold: 40 35% 52%;
     --gold-foreground: 0 0% 7%;
 
     --destructive: 0 70% 50%;
@@ -42,13 +37,11 @@ All colors MUST be HSL.
 
     --radius: 0.75rem;
 
-    /* Kingdom-specific colors */
     --mountain-base: 210 20% 25%;
     --mountain-peak: 210 15% 85%;
-    --decree-bg: 42 45% 92%; /* Parchment for Royal Decree */
-    --decree-border: 40 35% 52%; /* Gold border */
+    --decree-bg: 42 45% 92%;
+    --decree-border: 40 35% 52%;
 
-    /* Sidebar colors */
     --sidebar-background: 40 18% 93%;
     --sidebar-foreground: 0 0% 7%;
     --sidebar-primary: 30 35% 22%;
@@ -58,7 +51,6 @@ All colors MUST be HSL.
     --sidebar-border: 40 15% 82%;
     --sidebar-ring: 30 35% 22%;
 
-    /* Gradients */
     --gradient-hero: linear-gradient(135deg, hsl(40 25% 97%), hsl(40 15% 92%));
     --gradient-mountain: linear-gradient(180deg, hsl(210 25% 30%), hsl(210 20% 15%));
     --shadow-elegant: 0 10px 30px -10px hsl(30 35% 22% / 0.2);
@@ -66,8 +58,7 @@ All colors MUST be HSL.
   }
 
   .dark {
-    /* Dark mode - Dim Kingdom at Night */
-    --background: 30 15% 12%; /* Dark warm brown */
+    --background: 30 15% 12%;
     --foreground: 40 25% 95%;
 
     --card: 30 18% 15%;
@@ -76,7 +67,7 @@ All colors MUST be HSL.
     --popover: 30 18% 15%;
     --popover-foreground: 40 25% 95%;
 
-    --primary: 40 35% 52%; /* Gold becomes primary in dark */
+    --primary: 40 35% 52%;
     --primary-foreground: 30 15% 12%;
 
     --secondary: 30 12% 20%;
@@ -123,17 +114,14 @@ All colors MUST be HSL.
     @apply bg-background text-foreground font-sans antialiased;
   }
 
-  /* Typography - Elegant Serif Headings */
   h1, h2, h3, h4, h5, h6 {
     @apply font-serif;
   }
 
-  /* Smooth scrolling */
   html {
     scroll-behavior: smooth;
   }
 
-  /* Respect reduced motion */
   @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
@@ -146,7 +134,6 @@ All colors MUST be HSL.
 }
 
 @layer components {
-  /* Message animations */
   .message-enter {
     animation: message-slide-up 0.3s ease-out;
   }
@@ -162,14 +149,12 @@ All colors MUST be HSL.
     }
   }
 
-  /* Royal Decree card styling */
   .royal-decree {
     background: linear-gradient(135deg, hsl(var(--decree-bg)), hsl(var(--background)));
     border: 2px solid hsl(var(--decree-border));
     box-shadow: var(--shadow-glow);
   }
 
-  /* Hover animations */
   .hover-lift {
     @apply transition-all duration-200;
   }

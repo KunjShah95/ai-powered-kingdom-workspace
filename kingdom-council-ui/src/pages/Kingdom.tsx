@@ -53,7 +53,6 @@ const Kingdom = () => {
       </header>
 
       <main className="container mx-auto px-4 py-8 space-y-8">
-        {/* Hero Image */}
         <Card className="overflow-hidden">
           <img
             src={kingdomNight}
@@ -62,7 +61,6 @@ const Kingdom = () => {
           />
         </Card>
 
-        {/* Stats Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {stats.map((stat, index) => (
             <Card key={index} className="p-6 hover-lift">
@@ -83,7 +81,6 @@ const Kingdom = () => {
           ))}
         </div>
 
-        {/* Regions */}
         <div>
           <h2 className="text-2xl font-serif font-bold mb-6">Kingdom Regions</h2>
           <div className="grid md:grid-cols-2 gap-4">
@@ -108,7 +105,6 @@ const Kingdom = () => {
           </div>
         </div>
 
-        {/* Recent Activity */}
         <Card className="p-6">
           <h2 className="text-2xl font-serif font-bold mb-4">Recent Activity</h2>
           <div className="space-y-3">

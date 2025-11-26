@@ -58,13 +58,11 @@ export const KingdomMap = () => {
   return (
     <div className="w-full max-w-4xl mx-auto">
       <div className="relative">
-        {/* SVG Map */}
         <svg
           viewBox="0 0 500 320"
           className="w-full h-auto"
           style={{ filter: "drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1))" }}
         >
-          {/* Background */}
           <rect
             width="500"
             height="320"
@@ -74,7 +72,6 @@ export const KingdomMap = () => {
             rx="8"
           />
 
-          {/* Central Castle/Capital */}
           <g transform="translate(225, 140)">
             <circle cx="0" cy="0" r="15" fill="hsl(var(--gold))" opacity="0.2" />
             <polygon
@@ -87,7 +84,6 @@ export const KingdomMap = () => {
             <circle cx="0" cy="-12" r="2" fill="hsl(var(--foreground))" />
           </g>
 
-          {/* Regions */}
           {regions.map((region) => (
             <motion.path
               key={region.id}
@@ -106,13 +102,12 @@ export const KingdomMap = () => {
             />
           ))}
 
-          {/* Region Labels */}
           {regions.map((region, index) => {
             const positions = [
-              { x: 235, y: 85 }, // Northern
-              { x: 360, y: 130 }, // Eastern
-              { x: 250, y: 230 }, // Southern
-              { x: 120, y: 160 }, // Western
+              { x: 235, y: 85 },
+              { x: 360, y: 130 },
+              { x: 250, y: 230 },
+              { x: 120, y: 160 },
             ];
             return (
               <text
@@ -132,7 +127,6 @@ export const KingdomMap = () => {
           })}
         </svg>
 
-        {/* Hover Tooltip */}
         {hoveredRegion && (
           <motion.div
             initial={{ opacity: 0, y: 10 }}
@@ -156,7 +150,6 @@ export const KingdomMap = () => {
         )}
       </div>
 
-      {/* Selected Region Details */}
       {selectedRegion && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}

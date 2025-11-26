@@ -15,7 +15,6 @@ const RoyalDecreeCard = ({ content }: RoyalDecreeCardProps) => {
       className="flex justify-center my-8"
     >
       <Card className="royal-decree max-w-3xl w-full p-8 relative overflow-hidden">
-        {/* Decorative corner elements */}
         <div className="absolute top-0 left-0 w-16 h-16 border-t-2 border-l-2 border-gold/30 rounded-tl-lg" />
         <div className="absolute top-0 right-0 w-16 h-16 border-t-2 border-r-2 border-gold/30 rounded-tr-lg" />
         <div className="absolute bottom-0 left-0 w-16 h-16 border-b-2 border-l-2 border-gold/30 rounded-bl-lg" />

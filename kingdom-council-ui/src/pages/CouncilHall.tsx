@@ -36,14 +36,12 @@ const CouncilHall = () => {
   const handleSend = () => {
     if (!inputValue.trim()) return;
 
-    // Add user message
     const userMsg: Message = {
       id: Date.now().toString(),
       role: "user",
       content: inputValue,
     };
 
-    // Simulate council responses
     const councilResponses: Message[] = [
       {
         id: Date.now() + 1 + "",
@@ -90,12 +88,9 @@ const CouncilHall = () => {
 
   return (
     <div className="h-screen flex bg-background">
-      {/* Left Sidebar - Council Roster */}
       <CouncilRoster />
 
-      {/* Main Chat Area */}
       <div className="flex-1 flex flex-col">
-        {/* Header */}
         <header className="relative border-b p-4 bg-card overflow-hidden">
           <div
             className="absolute inset-0 z-0"
@@ -117,7 +112,6 @@ const CouncilHall = () => {
           </div>
         </header>
 
-        {/* Messages */}
         <div className="flex-1 overflow-y-auto p-6 space-y-6">
           {messages.map((msg) => (
             <div key={msg.id}>
@@ -136,7 +130,6 @@ const CouncilHall = () => {
           ))}
         </div>
 
-        {/* Input Area */}
         <div className="border-t p-4 bg-card">
           <div className="flex gap-3 items-end max-w-4xl mx-auto">
             <Textarea
@@ -169,7 +162,6 @@ const CouncilHall = () => {
         </div>
       </div>
 
-      {/* Right Sidebar - Kingdom Context */}
       <div className="w-80 border-l bg-card hidden xl:block overflow-y-auto">
         <Tabs defaultValue="stats" className="h-full">
           <TabsList className="w-full grid grid-cols-3 rounded-none border-b">

@@ -17,7 +17,6 @@ const Landing = () => {
   const mountainRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Parallax effect for mountain background
     if (mountainRef.current) {
       gsap.to(mountainRef.current, {
         yPercent: 30,
@@ -31,7 +30,6 @@ const Landing = () => {
       });
     }
 
-    // Fade in sections on scroll
     gsap.utils.toArray<HTMLElement>(".fade-section").forEach((section) => {
       gsap.from(section, {
         opacity: 0,
@@ -76,10 +74,8 @@ const Landing = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Navbar */}
       <Navbar />
 
-      {/* Hero Section */}
       <section ref={heroRef} className="relative h-screen flex items-center overflow-hidden pt-16 sm:pt-20">
         <div
           ref={mountainRef}
@@ -131,7 +127,6 @@ const Landing = () => {
         </div>
       </section>
 
-      {/* How It Works */}
       <section id="how-it-works" className="py-24 fade-section">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl md:text-5xl font-serif font-bold text-center mb-16">
@@ -173,7 +168,6 @@ const Landing = () => {
         </div>
       </section>
 
-      {/* Meet the Council */}
       <section className="py-24 bg-secondary/30 fade-section">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl md:text-5xl font-serif font-bold text-center mb-4">
@@ -199,7 +193,6 @@ const Landing = () => {
         </div>
       </section>
 
-      {/* Explore the Realm Section */}
       <section className="py-24 fade-section">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl md:text-5xl font-serif font-bold text-center mb-4">
@@ -213,7 +206,6 @@ const Landing = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
       <section className="py-24 bg-secondary/30 fade-section">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-4xl md:text-5xl font-serif font-bold mb-6">
@@ -231,7 +223,6 @@ const Landing = () => {
         </div>
       </section>
 
-      {/* Footer */}
       <footer className="border-t py-8">
         <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
           <p>© 2025 AI Kingdom Council. Built with wisdom from the mountains.</p>

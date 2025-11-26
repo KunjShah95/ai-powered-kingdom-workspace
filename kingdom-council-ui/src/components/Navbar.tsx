@@ -35,7 +35,6 @@ export const Navbar = () => {
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20">
-          {/* Logo */}
           <Link to="/" className="flex items-center gap-2 group">
             <Crown className="w-6 h-6 sm:w-7 sm:h-7 text-gold transition-transform group-hover:scale-110" />
             <span className="font-serif text-lg sm:text-xl font-bold text-foreground">
@@ -43,7 +42,6 @@ export const Navbar = () => {
             </span>
           </Link>
 
-          {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
               <Link
@@ -56,7 +54,6 @@ export const Navbar = () => {
             ))}
           </div>
 
-          {/* Auth Buttons */}
           <div className="hidden md:flex items-center gap-3">
             <Button variant="ghost" asChild>
               <Link to="/auth">Sign In</Link>
@@ -66,7 +63,6 @@ export const Navbar = () => {
             </Button>
           </div>
 
-          {/* Mobile Menu Button */}
           <button
             className="md:hidden p-2 text-foreground"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -80,7 +76,6 @@ export const Navbar = () => {
           </button>
         </div>
 
-        {/* Mobile Menu */}
         {isMobileMenuOpen && (
           <div className="md:hidden py-4 border-t border-border bg-background/95 backdrop-blur-md">
             <div className="flex flex-col gap-4">
