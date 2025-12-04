@@ -1,0 +1,59 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model CouncilMember {
+  id          String   @id @default(uuid())
+  name        String
+  role        String
+  title       String
+  avatarUrl   String?
+  description String?
+  stats       String?  // Stored as JSON string
+  status      String   @default("active") // active, inactive
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@map("council_members")
+}
+
+model KingdomEvent {
+  id          String   @id @default(uuid())
+  type        String   // decree, battle, ritual, council
+  title       String
+  description String
+  severity    String   // low, medium, high, critical
+  metadata    String?  // Stored as JSON string
+  timestamp   DateTime @default(now())
+  
+  @@map("kingdom_events")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  username  String   @unique
+  role      String   @default("citizen") // citizen, admin, king
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@map("users")
+}
+
+model FileChange {
+  id        String   @id @default(uuid())
+  path      String
+  action    String   // created, modified, deleted
+  content   String?
+  timestamp DateTime @default(now())
+  
+  @@map("file_changes")
+}

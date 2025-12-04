@@ -5,16 +5,76 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Crown } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import kingdomCeremony from "@/assets/kingdom-ceremony.png";
+import { useAuth } from "@/context/AuthContext";
+import api from "@/lib/api";
+import { useToast } from "@/components/ui/use-toast";
 
 const Auth = () => {
+  const navigate = useNavigate();
+  const { login } = useAuth();
+  const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Login State
+  const [loginEmail, setLoginEmail] = useState("");
+  const [loginPassword, setLoginPassword] = useState("");
+
+  // Signup State
+  const [signupUsername, setSignupUsername] = useState("");
+  const [signupEmail, setSignupEmail] = useState("");
+  const [signupPassword, setSignupPassword] = useState("");
+
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    setTimeout(() => setIsLoading(false), 1000);
+    try {
+      const response = await api.post('/auth/login', {
+        email: loginEmail,
+        password: loginPassword
+      });
+      login(response.data.token, response.data.user);
+      toast({
+        title: "Welcome back!",
+        description: "You have successfully logged in.",
+      });
+      navigate("/dashboard");
+    } catch (error: any) {
+      toast({
+        title: "Login failed",
+        description: error.response?.data?.error || "Invalid credentials",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleSignup = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    try {
+      const response = await api.post('/auth/register', {
+        username: signupUsername,
+        email: signupEmail,
+        password: signupPassword
+      });
+      login(response.data.token, response.data.user);
+      toast({
+        title: "Account created!",
+        description: "Welcome to the Kingdom Council.",
+      });
+      navigate("/dashboard");
+    } catch (error: any) {
+      toast({
+        title: "Signup failed",
+        description: error.response?.data?.error || "Failed to create account",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -44,14 +104,27 @@ const Auth = () => {
           </TabsList>
 
           <TabsContent value="signin">
-            <form onSubmit={handleSubmit} className="space-y-4 mt-4">
+            <form onSubmit={handleLogin} className="space-y-4 mt-4">
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" placeholder="your@email.com" required />
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="your@email.com"
+                  required
+                  value={loginEmail}
+                  onChange={(e) => setLoginEmail(e.target.value)}
+                />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="password">Password</Label>
-                <Input id="password" type="password" required />
+                <Input
+                  id="password"
+                  type="password"
+                  required
+                  value={loginPassword}
+                  onChange={(e) => setLoginPassword(e.target.value)}
+                />
               </div>
               <Button type="submit" className="w-full" disabled={isLoading}>
                 {isLoading ? "Signing in..." : "Sign In"}
@@ -60,18 +133,38 @@ const Auth = () => {
           </TabsContent>
 
           <TabsContent value="signup">
-            <form onSubmit={handleSubmit} className="space-y-4 mt-4">
+            <form onSubmit={handleSignup} className="space-y-4 mt-4">
               <div className="space-y-2">
-                <Label htmlFor="signup-name">Name</Label>
-                <Input id="signup-name" type="text" placeholder="Your name" required />
+                <Label htmlFor="signup-name">Username</Label>
+                <Input
+                  id="signup-name"
+                  type="text"
+                  placeholder="Your username"
+                  required
+                  value={signupUsername}
+                  onChange={(e) => setSignupUsername(e.target.value)}
+                />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="signup-email">Email</Label>
-                <Input id="signup-email" type="email" placeholder="your@email.com" required />
+                <Input
+                  id="signup-email"
+                  type="email"
+                  placeholder="your@email.com"
+                  required
+                  value={signupEmail}
+                  onChange={(e) => setSignupEmail(e.target.value)}
+                />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="signup-password">Password</Label>
-                <Input id="signup-password" type="password" required />
+                <Input
+                  id="signup-password"
+                  type="password"
+                  required
+                  value={signupPassword}
+                  onChange={(e) => setSignupPassword(e.target.value)}
+                />
               </div>
               <Button type="submit" className="w-full" disabled={isLoading}>
                 {isLoading ? "Creating account..." : "Create Account"}

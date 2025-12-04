@@ -1,89 +1,40 @@
 import { useState } from "react";
+import { useChat } from "@ai-sdk/react";
+import { UIMessage, DefaultChatTransport } from "ai";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
-import { Send, Crown, Shield, BookOpen, Sparkles, Map, BarChart3, Eye } from "lucide-react";
+import { Send, Crown, Map, BarChart3, Eye } from "lucide-react";
 import ChatMessage from "@/components/ChatMessage";
 import CouncilRoster from "@/components/CouncilRoster";
-import RoyalDecreeCard from "@/components/RoyalDecreeCard";
 import strategyRoom from "@/assets/strategy-room.png";
 
-interface Message {
-  id: string;
-  role: "user" | "agent" | "king";
-  content: string;
-  agentName?: string;
-  agentRole?: string;
-  icon?: any;
-}
-
 const CouncilHall = () => {
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: "1",
-      role: "agent",
-      content:
-        "Welcome to the Council Hall. I am the Senapati, commander of the kingdom's defenses. How may the council serve you today?",
-      agentName: "The Senapati",
-      agentRole: "Military Commander",
-      icon: Shield,
-    },
-  ]);
-  const [inputValue, setInputValue] = useState("");
+  const [input, setInput] = useState("");
+  const { messages, sendMessage } = useChat({
+    transport: new DefaultChatTransport({
+      api: "http://localhost:3001/api/ai/chat",
+    }),
+  });
 
-  const handleSend = () => {
-    if (!inputValue.trim()) return;
+  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setInput(e.target.value);
+  };
 
-    const userMsg: Message = {
-      id: Date.now().toString(),
-      role: "user",
-      content: inputValue,
-    };
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!input.trim()) return;
+    await sendMessage({ text: input });
+    setInput("");
+  };
 
-    const councilResponses: Message[] = [
-      {
-        id: Date.now() + 1 + "",
-        role: "agent",
-        content: "From a military perspective, we must consider defensive positioning and resource allocation...",
-        agentName: "The Senapati",
-        agentRole: "Military Commander",
-        icon: Shield,
-      },
-      {
-        id: Date.now() + 2 + "",
-        role: "agent",
-        content: "The philosophical implications suggest we must balance immediate action with long-term wisdom...",
-        agentName: "The Guru",
-        agentRole: "Wisdom Keeper",
-        icon: BookOpen,
-      },
-      {
-        id: Date.now() + 3 + "",
-        role: "agent",
-        content: "For governance and diplomacy, I recommend a measured approach that considers all stakeholders...",
-        agentName: "The Mantri",
-        agentRole: "Chief Minister",
-        icon: Sparkles,
-      },
-    ];
-
-    const decree: Message = {
-      id: Date.now() + 4 + "",
-      role: "king",
-      content:
-        "Having heard all counsel, the Royal Decree is thus: We shall proceed with caution and wisdom, balancing military readiness with diplomatic grace. Let the council's collective wisdom guide our path forward.",
-      agentName: "The King",
-      agentRole: "Final Authority",
-      icon: Crown,
-    };
-
-    setTimeout(() => {
-      setMessages((prev) => [...prev, userMsg, ...councilResponses, decree]);
-    }, 500);
-
-    setInputValue("");
+  const getMessageContent = (msg: UIMessage) => {
+    return msg.parts
+      .filter((part) => part.type === "text")
+      .map((part) => (part as any).text)
+      .join("");
   };
 
   return (
@@ -113,17 +64,25 @@ const CouncilHall = () => {
         </header>
 
         <div className="flex-1 overflow-y-auto p-6 space-y-6">
-          {messages.map((msg) => (
+          {messages.length === 0 && (
+             <div className="text-center text-muted-foreground mt-10">
+               <p>The Council is assembled. Speak your mind.</p>
+             </div>
+          )}
+          {messages.map((msg: UIMessage) => (
             <div key={msg.id}>
-              {msg.role === "king" ? (
-                <RoyalDecreeCard content={msg.content} />
+              {msg.role === "user" ? (
+                <ChatMessage
+                  role="user"
+                  content={getMessageContent(msg)}
+                />
               ) : (
                 <ChatMessage
-                  role={msg.role}
-                  content={msg.content}
-                  agentName={msg.agentName}
-                  agentRole={msg.agentRole}
-                  icon={msg.icon}
+                  role="agent"
+                  content={getMessageContent(msg)}
+                  agentName="The Council"
+                  agentRole="Collective Wisdom"
+                  icon={Crown}
                 />
               )}
             </div>
@@ -131,23 +90,23 @@ const CouncilHall = () => {
         </div>
 
         <div className="border-t p-4 bg-card">
-          <div className="flex gap-3 items-end max-w-4xl mx-auto">
+          <form onSubmit={handleSubmit} className="flex gap-3 items-end max-w-4xl mx-auto">
             <Textarea
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
+              value={input}
+              onChange={handleInputChange}
               placeholder="Present your question to the council..."
               className="min-h-[60px] resize-none"
               onKeyDown={(e) => {
                 if (e.key === "Enter" && !e.shiftKey) {
                   e.preventDefault();
-                  handleSend();
+                  handleSubmit(e);
                 }
               }}
             />
-            <Button onClick={handleSend} size="lg">
+            <Button type="submit" size="lg">
               <Send className="h-5 w-5" />
             </Button>
-          </div>
+          </form>
           <div className="flex gap-2 mt-3 max-w-4xl mx-auto">
             <Badge variant="outline" className="cursor-pointer hover:bg-accent/10">
               Military strategy
@@ -161,6 +120,7 @@ const CouncilHall = () => {
           </div>
         </div>
       </div>
+
 
       <div className="w-80 border-l bg-card hidden xl:block overflow-y-auto">
         <Tabs defaultValue="stats" className="h-full">
